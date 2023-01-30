@@ -64,7 +64,7 @@ public:
 		//    InternalEvent(ST_MY_STATE_FUNCTION, new MyEventData());
 		// This next internal event is not valid and causes the assert to fail:
 		//    InternalEvent(ST_MY_STATE_FUNCTION, new OtherEventData());
-		const Data* derivedData = dynamic_cast<const Data*>(data);
+		const Data* derivedData = static_cast<const Data*>(data);
 		ASSERT_TRUE(derivedData != NULL);
 
 		// Call the state function
@@ -95,7 +95,7 @@ public:
 	virtual BOOL InvokeGuardCondition(StateMachine* sm, const EventData* data) const 
 	{
 		SM* derivedSM = static_cast<SM*>(sm);		
-		const Data* derivedData = dynamic_cast<const Data*>(data);
+		const Data* derivedData = static_cast<const Data*>(data);
 		ASSERT_TRUE(derivedData != NULL);
 
 		// Call the guard function
@@ -124,7 +124,7 @@ public:
 	virtual void InvokeEntryAction(StateMachine* sm, const EventData* data) const
 	{
 		SM* derivedSM = static_cast<SM*>(sm);
-		const Data* derivedData = dynamic_cast<const Data*>(data);
+		const Data* derivedData = static_cast<const Data*>(data);
 		ASSERT_TRUE(derivedData != NULL);
 
 		// Call the entry function

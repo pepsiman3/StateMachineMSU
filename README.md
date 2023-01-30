@@ -494,7 +494,7 @@ public:
     virtual void InvokeStateAction(StateMachine* sm, const EventData* data) const = 0;
 };</pre>
 
-<p>The <code>StateAction </code>derives from <code>StateBase </code>and its sole responsibility is to implement <code>InvokeStateAction()</code> and cast the <code>StateMachine </code>and <code>EventData </code>pointers to the correct derived class types, then call the state member function. Therefore, the state engine overhead to call each state function is one virtual function call, one <code>static_cast&lt;&gt; </code>and one <code>dynamic_cast&lt;&gt;</code>.</p>
+<p>The <code>StateAction </code>derives from <code>StateBase </code>and its sole responsibility is to implement <code>InvokeStateAction()</code> and cast the <code>StateMachine </code>and <code>EventData </code>pointers to the correct derived class types, then call the state member function. Therefore, the state engine overhead to call each state function is one virtual function call, one <code>static_cast&lt;&gt; </code>and one <code>static_cast&lt;&gt;</code>.</p>
 
 <pre lang="c++">
 template &lt;class SM, class Data, void (SM::*Func)(const Data*)&gt;
@@ -507,7 +507,7 @@ public:
         SM* derivedSM = static_cast&lt;SM*&gt;(sm);
 
         // Dynamic cast the data to the correct derived type        
-        const Data* derivedData = dynamic_cast&lt;const Data*&gt;(data);
+        const Data* derivedData = static_cast&lt;const Data*&gt;(data);
         ASSERT_TRUE(derivedData != NULL);
 
         // Call the state function
